@@ -1,0 +1,19 @@
+# Node
+node_modules/
+frontend/dist/
+
+# .NET
+backend/bin/
+backend/obj/
+
+# DB
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
