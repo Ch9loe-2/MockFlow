@@ -285,7 +285,7 @@ curl http://localhost:5001/mock/disabled-endpoint
 
 ## 面试问答资产
 
-> 👇 见 `INTERVIEW.md` 文件 — 涵盖架构决策、技术难点、面试必问及项目亮点
+> 面试官可能看到这份文档，面试问答资产保存在本地 `INTERVIEW.md`，不在公开仓库中。
 
 ---
 
@@ -375,9 +375,8 @@ curl http://localhost:5001/mock/disabled-endpoint
 
 ---
 
-## 设计文档与面试资产
+## 设计文档
 
-- [`INTERVIEW.md`](INTERVIEW.md) — 面试问答、架构决策、亮点总结
 - [`CODE_REVIEW.md`](CODE_REVIEW.md) — 两轮 Code Review 完整记录（含审查标准与修复日志）
 
 ---
