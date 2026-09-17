@@ -86,6 +86,13 @@ public class MockApiService
                                    && a.IsEnabled);
     }
 
+    public async Task<MockApi?> FindMockIgnoreEnabledAsync(string method, string path)
+    {
+        return await _context.MockApis
+            .FirstOrDefaultAsync(a => a.Method == method.ToUpper()
+                                   && a.Path == path);
+    }
+
     public async Task<MockApi?> FindDisabledMockAsync(string method, string path)
     {
         return await _context.MockApis
