@@ -67,7 +67,7 @@ export default {
         const config = {
           method: this.method,
           url: fullUrl,
-          baseURL: this.url.startsWith('http') ? undefined : 'http://localhost:5001',
+          baseURL: undefined,
           validateStatus: () => true
         }
 
