@@ -283,12 +283,6 @@ curl http://localhost:5001/mock/disabled-endpoint
 
 ---
 
-## 面试问答资产
-
-> 面试官可能看到这份文档，面试问答资产保存在本地 `INTERVIEW.md`，不在公开仓库中。
-
----
-
 ## 技术难点
 
 1. **动态路由匹配**：使用 ASP.NET Core Middleware 处理所有 `/mock/*` 请求，在运行时根据数据库配置动态生成响应，而非手写 Controller 路由。中间件中同时记录请求日志和响应时间。
