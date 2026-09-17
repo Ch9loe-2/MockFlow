@@ -47,7 +47,7 @@ export default {
     return {
       method: 'GET',
       url: '/mock/users',
-      requestBody: '{\n  "email": "user@example.com",\n  "password": "123456"\n}',
+      requestBody: '{\n  "email": "user@example.com",\n  "name": "Chloe"\n}',
       response: null,
       responseTime: 0,
       sending: false,

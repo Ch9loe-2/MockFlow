@@ -44,5 +44,4 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.UseMiddleware<MockEndpointMiddleware>();
 app.MapControllers();
 
-app.Urls.Add("http://localhost:5001");
 await app.RunAsync();
