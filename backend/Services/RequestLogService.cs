@@ -29,16 +29,20 @@ public class RequestLogService
             .ToListAsync();
 
         var sevenDaysAgo = DateTime.UtcNow.AddDays(-7);
-        var dailyRequests = await _context.RequestLogs
+        var recentLogsForChart = await _context.RequestLogs
             .Where(l => l.RequestedAt >= sevenDaysAgo)
-            .GroupBy(l => l.RequestedAt.Date)
+            .Select(l => l.RequestedAt.Date)
+            .ToListAsync();
+
+        var dailyRequests = recentLogsForChart
+            .GroupBy(d => d)
             .Select(g => new DailyRequestCountDto
             {
                 Date = g.Key.ToString("MM-dd"),
                 Count = g.Count()
             })
             .OrderBy(d => d.Date)
-            .ToListAsync();
+            .ToList();
 
         return new DashboardStatsDto
         {
