@@ -14,7 +14,7 @@ public class MockApiDto
     public DateTime UpdatedAt { get; set; }
 }
 
-public class CreateMockApiDto
+public abstract class MockApiBaseDto
 {
     public string Name { get; set; } = string.Empty;
     public string Method { get; set; } = "GET";
@@ -25,13 +25,6 @@ public class CreateMockApiDto
     public bool IsEnabled { get; set; } = true;
 }
 
-public class UpdateMockApiDto
-{
-    public string Name { get; set; } = string.Empty;
-    public string Method { get; set; } = "GET";
-    public string Path { get; set; } = string.Empty;
-    public int StatusCode { get; set; } = 200;
-    public string ResponseBody { get; set; } = "{}";
-    public string Description { get; set; } = string.Empty;
-    public bool IsEnabled { get; set; } = true;
-}
+public class CreateMockApiDto : MockApiBaseDto { }
+
+public class UpdateMockApiDto : MockApiBaseDto { }

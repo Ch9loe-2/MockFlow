@@ -65,7 +65,7 @@ export default {
       try {
         const config = {
           method: this.method,
-          url: fullUrl,
+          url: this.url,
           baseURL: undefined,
           validateStatus: () => true
         }

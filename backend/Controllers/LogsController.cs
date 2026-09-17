@@ -19,6 +19,7 @@ public class LogsController : ControllerBase
     public async Task<ActionResult<PagedResult<RequestLogDto>>> GetLogs(
         [FromQuery] string? method,
         [FromQuery] int? statusCode,
+        [FromQuery] string? statusCodeRange,
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20)
     {
@@ -29,6 +30,7 @@ public class LogsController : ControllerBase
         {
             Method = method,
             StatusCode = statusCode,
+            StatusCodeRange = statusCodeRange,
             Page = page,
             PageSize = pageSize
         };

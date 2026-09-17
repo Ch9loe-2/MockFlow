@@ -31,6 +31,7 @@ public class LogFilterDto
 {
     public string? Method { get; set; }
     public int? StatusCode { get; set; }
+    public string? StatusCodeRange { get; set; }
     public int Page { get; set; } = 1;
     public int PageSize { get; set; } = 20;
 }

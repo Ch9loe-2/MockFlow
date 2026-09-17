@@ -260,6 +260,35 @@ curl http://localhost:5001/mock/disabled-endpoint
 
 ---
 
+## 第二轮深度 Code Review（2026-09-17）
+
+### 🔴 发现并修复的关键 Bug
+
+| # | 严重程度 | Bug 描述 | 修复方式 |
+|---|---------|----------|---------|
+| 1 | **P0（编译/运行时错误）** | `ApiTester.vue` 中 `fullUrl` 变量未定义：之前清理死代码时删除了变量定义但未删除引用，导致 Axios 请求的 `url` 指向 `undefined`，API Tester 功能不可用 | 将 `url: fullUrl` 替换为 `url: this.url` |
+| 2 | **P1（功能缺陷）** | Logs 页面 Status Code 筛选器使用 `value="400"`，只精确匹配 400 状态码，无法筛选整个 4xx 范围。用户选"4xx"期望看到所有 4xx 错误（400/403/404/409等） | 改为 `statusCodeRange=400-499` 范围匹配，后端同时兼容精确 `statusCode` 参数和 `statusCodeRange` 范围参数 |
+| 3 | **P1（代码质量）** | `MockApiService` 中 `FindDisabledMockAsync()` 方法已无调用方（上一轮优化已用 `FindMockIgnoreEnabledAsync` 替代），成为死代码 | 删除该方法 |
+| 4 | **P1（安全加固）** | 后端 Controller 层缺少输入验证：前端有 Name/Path 非空验证，但后端接口（curl/Postman 调用）可以绕过前端验证直接写入空值或超长数据 | 在 POST 和 PUT 端增加 Name/Path 非空、长度上限（Name 100、Path 500）和 Method 白名单校验 |
+| 5 | **P2（代码重复）** | `CreateMockApiDto` 和 `UpdateMockApiDto` 字段定义完全一致，6 个属性重复声明 | 提取 `MockApiBaseDto` 抽象基类，两个 DTO 继承基类，减少 ~50% 重复代码 |
+| 6 | **P2（生产安全）** | `ExceptionMiddleware` 在生产环境会静默输出 500，排障困难；同时使用匿名对象，无法区分开发/生产环境 | 注入 `IHostEnvironment`，开发环境返回 `detail` + `stackTrace`，生产环境仅返回安全错误信息 |
+
+### 测试回归
+
+第二轮修复后，62 项自动化测试全部通过，新增验证：
+- `statusCodeRange=200-299` 范围过滤 ✅
+- `statusCodeRange=400-499` 范围过滤 ✅
+- 后端字段空值校验 ✅
+- 无效 Method 拒绝 ✅
+
+---
+
+## 面试问答资产
+
+> 👇 见 `INTERVIEW.md` 文件 — 涵盖架构决策、技术难点、面试必问及项目亮点
+
+---
+
 ## 技术难点
 
 1. **动态路由匹配**：使用 ASP.NET Core Middleware 处理所有 `/mock/*` 请求，在运行时根据数据库配置动态生成响应，而非手写 Controller 路由。中间件中同时记录请求日志和响应时间。
@@ -343,6 +372,13 @@ curl http://localhost:5001/mock/disabled-endpoint
 > *API Tester 页面提供请求发送和响应查看功能。*
 >
 > *Logs 页面展示请求历史记录，支持筛选和分页。*
+
+---
+
+## 设计文档与面试资产
+
+- [`INTERVIEW.md`](INTERVIEW.md) — 面试问答、架构决策、亮点总结
+- [`CODE_REVIEW.md`](CODE_REVIEW.md) — 两轮 Code Review 完整记录（含审查标准与修复日志）
 
 ---
 

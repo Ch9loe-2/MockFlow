@@ -65,6 +65,13 @@ public class RequestLogService
         if (filter.StatusCode.HasValue)
             query = query.Where(l => l.StatusCode == filter.StatusCode.Value);
 
+        if (!string.IsNullOrEmpty(filter.StatusCodeRange))
+        {
+            var parts = filter.StatusCodeRange.Split('-');
+            if (parts.Length == 2 && int.TryParse(parts[0], out var min) && int.TryParse(parts[1], out var max))
+                query = query.Where(l => l.StatusCode >= min && l.StatusCode <= max);
+        }
+
         var total = await query.CountAsync();
 
         var items = await query

@@ -19,6 +19,7 @@ builder.Services.AddScoped<MockApiService>();
 builder.Services.AddScoped<RequestLogService>();
 
 // CORS for frontend
+// ⚠️ Production: replace AllowAnyOrigin with WithOrigins("https://yourdomain.com")
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>

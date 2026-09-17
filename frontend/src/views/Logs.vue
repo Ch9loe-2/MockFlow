@@ -15,11 +15,9 @@
       </select>
       <select v-model="filterStatus" @change="fetchLogs">
         <option value="">All Status Codes</option>
-        <option value="200">2xx</option>
-        <option value="400">4xx</option>
-        <option value="404">404</option>
-        <option value="403">403</option>
-        <option value="500">5xx</option>
+        <option value="200-299">2xx</option>
+        <option value="400-499">4xx</option>
+        <option value="500-599">5xx</option>
       </select>
     </div>
 
@@ -87,7 +85,7 @@ export default {
         this.loading = true
         const params = { page: this.page, pageSize: this.pageSize }
         if (this.filterMethod) params.method = this.filterMethod
-        if (this.filterStatus) params.statusCode = parseInt(this.filterStatus)
+        if (this.filterStatus) params.statusCodeRange = this.filterStatus
 
         const res = await api.getLogs(params)
         this.logs = res.data.items

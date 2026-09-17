@@ -34,6 +34,17 @@ public class MockApisController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<MockApiDto>> Create([FromBody] CreateMockApiDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name))
+            return BadRequest(new { code = 400, message = "Name is required" });
+        if (dto.Name.Length > 100)
+            return BadRequest(new { code = 400, message = "Name must be 100 characters or fewer" });
+        if (string.IsNullOrWhiteSpace(dto.Path))
+            return BadRequest(new { code = 400, message = "Path is required" });
+        if (dto.Path.Length > 500)
+            return BadRequest(new { code = 400, message = "Path must be 500 characters or fewer" });
+        if (dto.Method.ToUpper() is not ("GET" or "POST" or "PUT" or "DELETE"))
+            return BadRequest(new { code = 400, message = "Method must be GET, POST, PUT, or DELETE" });
+
         if (!IsValidJson(dto.ResponseBody))
             return BadRequest(new { code = 400, message = "Response JSON format error" });
 
@@ -51,6 +62,17 @@ public class MockApisController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<MockApiDto>> Update(int id, [FromBody] UpdateMockApiDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name))
+            return BadRequest(new { code = 400, message = "Name is required" });
+        if (dto.Name.Length > 100)
+            return BadRequest(new { code = 400, message = "Name must be 100 characters or fewer" });
+        if (string.IsNullOrWhiteSpace(dto.Path))
+            return BadRequest(new { code = 400, message = "Path is required" });
+        if (dto.Path.Length > 500)
+            return BadRequest(new { code = 400, message = "Path must be 500 characters or fewer" });
+        if (dto.Method.ToUpper() is not ("GET" or "POST" or "PUT" or "DELETE"))
+            return BadRequest(new { code = 400, message = "Method must be GET, POST, PUT, or DELETE" });
+
         if (!IsValidJson(dto.ResponseBody))
             return BadRequest(new { code = 400, message = "Response JSON format error" });
 

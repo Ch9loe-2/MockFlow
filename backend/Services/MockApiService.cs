@@ -93,14 +93,6 @@ public class MockApiService
                                    && a.Path == path);
     }
 
-    public async Task<MockApi?> FindDisabledMockAsync(string method, string path)
-    {
-        return await _context.MockApis
-            .FirstOrDefaultAsync(a => a.Method == method.ToUpper()
-                                   && a.Path == path
-                                   && !a.IsEnabled);
-    }
-
     private static MockApiDto MapToDto(MockApi api) => new()
     {
         Id = api.Id,
