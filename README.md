@@ -58,7 +58,7 @@ MockFlow 是一个轻量级的可视化 API Mock 平台 + 接口调试工具。�
 
 | 层级 | 技术 |
 |------|------|
-| **前端** | Vue 3 (Composition API) + Vite 8 + Vue Router 4 + Axios |
+| **前端** | Vue 3 (Options API) + Vite 8 + Vue Router 4 + Axios |
 | **后端** | C# / ASP.NET Core 10 + Entity Framework Core 10 |
 | **数据库** | SQLite |
 | **架构** | 前后端分离（Vite Proxy 代理） |
@@ -283,6 +283,54 @@ curl http://localhost:5001/mock/disabled-endpoint
 - [ ] **历史请求回放**：从日志重新发送请求
 - [ ] **多用户支持**：登录和权限管理
 - [ ] **API 导入导出**：支持 OpenAPI / Swagger 导入
+
+---
+
+## 测试覆盖
+
+项目经过完整的自动化回归测试，62 项测试全部通过。
+
+### 管理 API 测试
+
+- 查询所有 Mock API ✓
+- 查询单个 Mock API ✓
+- 查询不存在的 API → 404 ✓
+- 创建 Mock API → 201 ✓
+- 创建重复 Method+Path → 409 ✓
+- 创建无效 JSON ResponseBody → 400 ✓
+- 空 ResponseBody 拒绝保存 ✓
+- 更新 Mock API ✓
+- 更新不存在 API → 404 ✓
+- 删除 Mock API → 204 ✓
+- 删除不存在 API → 404 ✓
+
+### 动态 Mock 测试
+
+- GET /mock/users → 200 + 正确 JSON ✓
+- GET /mock/products → 200 ✓
+- POST /mock/login → 200 + token ✓
+- 不存在接口 → 404 `${"code":404,"message":"Mock API not found"}` ✓
+- 不同 Method 相同 Path 独立配置 ✓
+- 中文路径正常处理 ✓
+- 超长路径（200 字符）正常处理 ✓
+- 配置 Status Code 500 正确返回 ✓
+- 大响应体（100KB+）正常返回 ✓
+
+### Dashboard 测试
+
+- 返回 200 ✓
+- 包含 API 总数、启用数、请求量 ✓
+- 包含平均响应时间 ✓
+- 包含近 7 天每日请求趋势数据 ✓
+- 包含最近请求日志列表 ✓
+
+### 日志测试
+
+- 分页查询 ✓
+- Method 筛选 ✓
+- Status Code 筛选 ✓
+- 清空日志 ✓
+- pageSize 上限钳制（max 100） ✓
 
 ---
 
