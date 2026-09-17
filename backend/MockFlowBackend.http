@@ -1,6 +1,30 @@
-@MockFlowBackend_HostAddress = http://localhost:5094
+@MockFlow_HostAddress = http://localhost:5001
 
-GET {{MockFlowBackend_HostAddress}}/weatherforecast/
-Accept: application/json
+### Get all Mock APIs
+GET {{MockFlow_HostAddress}}/api/mock-apis
 
-###
+### Get Dashboard stats
+GET {{MockFlow_HostAddress}}/api/logs/dashboard
+
+### Get request logs
+GET {{MockFlow_HostAddress}}/api/logs
+
+### Mock GET /mock/users
+GET {{MockFlow_HostAddress}}/mock/users
+
+### Mock 404
+GET {{MockFlow_HostAddress}}/mock/nonexistent
+
+### Create a Mock API
+POST {{MockFlow_HostAddress}}/api/mock-apis
+Content-Type: application/json
+
+{
+  "name": "New Test API",
+  "method": "GET",
+  "path": "/mock/test-new",
+  "statusCode": 200,
+  "responseBody": "{\"message\":\"ok\"}",
+  "description": "Test",
+  "isEnabled": true
+}
