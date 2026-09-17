@@ -1,5 +1,8 @@
 <template>
   <div class="dashboard">
+    <div v-if="loading" class="loading">Loading...</div>
+    <div v-else-if="error" class="error-msg">{{ error }}</div>
+    <template v-else>
     <div class="stats-grid">
       <div class="stat-card">
         <div class="stat-label">Mock APIs</div>
@@ -54,6 +57,7 @@
         <div v-else class="chart-empty">No requests recorded yet</div>
       </div>
     </div>
+    </template>
   </div>
 </template>
 
@@ -64,7 +68,9 @@ export default {
   name: 'Dashboard',
   data() {
     return {
-      stats: {}
+      stats: {},
+      error: '',
+      loading: true
     }
   },
   mounted() {
@@ -72,11 +78,16 @@ export default {
   },
   methods: {
     async fetchData() {
+      this.loading = true
+      this.error = ''
       try {
         const res = await api.getDashboard()
         this.stats = res.data
       } catch (e) {
+        this.error = 'Failed to load dashboard data'
         console.error('Failed to load dashboard:', e)
+      } finally {
+        this.loading = false
       }
     },
     methodClass(m) {
@@ -125,4 +136,6 @@ export default {
 .status-4xx { color: #dc2626; }
 .status-5xx { color: #7c3aed; }
 .log-time { color: #94a3b8; width: 48px; text-align: right; }
+.loading { color: #94a3b8; padding: 60px 0; text-align: center; font-size: 14px; }
+.error-msg { padding: 12px; background: #fef2f2; border-radius: 6px; color: #dc2626; font-size: 13px; margin-bottom: 16px; }
 </style>

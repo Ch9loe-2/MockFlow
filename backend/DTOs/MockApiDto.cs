@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace MockFlowBackend.DTOs;
 
 public class MockApiDto

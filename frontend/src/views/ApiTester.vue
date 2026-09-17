@@ -60,7 +60,6 @@ export default {
       this.response = null
       this.sending = true
 
-      const fullUrl = this.url.startsWith('http') ? this.url : this.url
       const start = performance.now()
 
       try {

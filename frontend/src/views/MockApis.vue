@@ -94,7 +94,7 @@ export default {
 .table-row { display: grid; grid-template-columns: 2fr 80px 1.5fr 80px 100px 120px; gap: 8px; padding: 12px 16px; border-top: 1px solid #f1f5f9; align-items: center; font-size: 14px; }
 .table-row:hover { background: #f8fafc; }
 .col-name { color: #1e293b; font-weight: 500; }
-.code { font-family: 'SF Mono', 'Menlo', monospace; font-size: 13px; color: #475569; }
+.code { font-family: 'SF Mono', 'Menlo', monospace; font-size: 13px; color: #475569; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .method-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
 .method-badge.get { background: #dbeafe; color: #2563eb; }
 .method-badge.post { background: #dcfce7; color: #16a34a; }

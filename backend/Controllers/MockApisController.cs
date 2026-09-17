@@ -54,11 +54,18 @@ public class MockApisController : ControllerBase
         if (!IsValidJson(dto.ResponseBody))
             return BadRequest(new { code = 400, message = "Response JSON format error" });
 
-        var api = await _service.UpdateAsync(id, dto);
-        if (api == null)
-            return NotFound(new { code = 404, message = "Mock API not found" });
+        try
+        {
+            var api = await _service.UpdateAsync(id, dto);
+            if (api == null)
+                return NotFound(new { code = 404, message = "Mock API not found" });
 
-        return api;
+            return api;
+        }
+        catch (Exception ex) when (ex.InnerException?.Message.Contains("UNIQUE") == true)
+        {
+            return Conflict(new { code = 409, message = $"A mock API with method '{dto.Method}' and path '{dto.Path}' already exists" });
+        }
     }
 
     [HttpDelete("{id}")]
